@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Brand } from '../types';
+import type { Brand } from '../types';
 
 interface OrderEditorProps {
     brands: Brand[];
