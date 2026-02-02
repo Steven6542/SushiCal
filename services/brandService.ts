@@ -31,6 +31,7 @@ const dbBrandToBrand = (dbBrand: DatabaseBrand): Brand => {
         defaultServiceCharge: dbBrand.default_service_charge as ServiceChargeConfig,
         tags: dbBrand.tags as ('hot' | 'new')[] | undefined,
         region: (dbBrand.region as any) || undefined,
+        sortOrder: (dbBrand as any).sort_order
     };
 };
 
@@ -64,6 +65,7 @@ export const getBrands = async (): Promise<Brand[]> => {
             brand_plates (*),
             brand_side_dishes (*)
         `)
+        .order('sort_order', { ascending: true })
         .order('created_at', { ascending: false });
 
     if (error) {
@@ -74,8 +76,8 @@ export const getBrands = async (): Promise<Brand[]> => {
     return (data || []).map(dbBrand => ({
         ...dbBrandToBrand(dbBrand),
         // Use relational data if available, otherwise fall back to JSON (for backward compatibility during migration)
-        plates: dbBrand.brand_plates?.length > 0 ? dbBrand.brand_plates.map(mapDbPlate) : dbBrandToBrand(dbBrand).plates,
-        sideDishes: dbBrand.brand_side_dishes?.length > 0 ? dbBrand.brand_side_dishes.map(mapDbSide) : dbBrandToBrand(dbBrand).sideDishes
+        plates: dbBrand.brand_plates?.length > 0 ? dbBrand.brand_plates.map(mapDbPlate) : (dbBrand.plates || []),
+        sideDishes: dbBrand.brand_side_dishes?.length > 0 ? dbBrand.brand_side_dishes.map(mapDbSide) : (dbBrand.side_dishes || [])
     }));
 };
 

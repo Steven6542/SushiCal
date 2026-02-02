@@ -38,6 +38,7 @@ export interface Brand {
   tags?: ('hot' | 'new')[];
   isShared?: boolean;
   region?: Region; // For filtering, simplified for this demo
+  sortOrder?: number;
 }
 
 export interface MealItem {

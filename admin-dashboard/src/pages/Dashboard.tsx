@@ -2,28 +2,28 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import type { Brand } from '../types';
 import { Link } from 'react-router-dom';
+import { OrderEditor } from '../components/OrderEditor';
 
 export function Dashboard() {
     const [brands, setBrands] = useState<Brand[]>([]);
     const [loading, setLoading] = useState(true);
+    const [showReorder, setShowReorder] = useState(false);
 
     useEffect(() => {
         fetchBrands();
     }, []);
 
     const fetchBrands = async () => {
+        // ... (existing fetch logic remains same, just ensuring imports are correct)
         try {
             const { data, error } = await supabase
                 .from('brands')
                 .select('*')
                 .eq('is_shared', true)
+                .order('sort_order', { ascending: true })
                 .order('created_at', { ascending: false });
 
             if (error) throw error;
-
-            // Map DB snake_case to CamelCase if needed or just use DB types?
-            // Our type definition in types.ts used camelCase (e.g. logoUrl).
-            // We need to map it.
 
             const mappedBrands = (data || []).map(b => ({
                 id: b.id,
@@ -34,6 +34,7 @@ export function Dashboard() {
                 region: b.region,
                 isShared: b.is_shared,
                 defaultServiceCharge: b.default_service_charge,
+                sortOrder: b.sort_order
             }));
 
             setBrands(mappedBrands);
@@ -48,7 +49,16 @@ export function Dashboard() {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Shared Brands</h2>
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800">Shared Brands</h2>
+                <button
+                    onClick={() => setShowReorder(true)}
+                    className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                    <span className="material-symbols-outlined text-sm">sort</span>
+                    Reorder Brands
+                </button>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {brands.map(brand => (
@@ -63,9 +73,11 @@ export function Dashboard() {
                         <div className="p-4">
                             <div className="flex justify-between items-start mb-2">
                                 <h3 className="text-lg font-bold text-gray-900">{brand.name}</h3>
-                                <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-800 font-medium">
-                                    {brand.id}
-                                </span>
+                                <div className="flex gap-2">
+                                    <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-800 font-medium">
+                                        #{brand.sortOrder ?? 99}
+                                    </span>
+                                </div>
                             </div>
                             <p className="text-sm text-gray-600 mb-4 line-clamp-2">{brand.description}</p>
 
@@ -79,6 +91,14 @@ export function Dashboard() {
                     </div>
                 ))}
             </div>
+
+            {showReorder && (
+                <OrderEditor
+                    brands={brands}
+                    onClose={() => setShowReorder(false)}
+                    onSave={fetchBrands}
+                />
+            )}
         </div>
     );
 }

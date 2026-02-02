@@ -6,6 +6,7 @@ export interface Brand {
     tags?: string[];
     region?: string;
     isShared: boolean;
+    sortOrder?: number;
     defaultServiceCharge: {
         type: 'percent' | 'head' | 'none';
         value: number;
