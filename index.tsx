@@ -7,9 +7,13 @@ if (!rootElement) {
   throw new Error("Could not find root element to mount to");
 }
 
+import { GlobalError } from './components/GlobalError';
+
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <App />
+    <GlobalError>
+      <App />
+    </GlobalError>
   </React.StrictMode>
 );

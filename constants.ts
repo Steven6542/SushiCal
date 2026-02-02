@@ -1,11 +1,12 @@
 import { Brand, MealRecord, Region } from './types';
 
-export const GET_CURRENCY = (region: Region) => {
-    switch (region) {
-        case 'mainland': return '¥';
-        case 'macau': return 'MOP$';
-        case 'hk': default: return 'HK$';
-    }
+export const GET_CURRENCY = (region: string) => {
+  switch (region) {
+    case 'mainland': return '¥';
+    case 'macau': return 'MOP$';
+    case 'hk':
+    default: return 'HK$';
+  }
 };
 
 export const MOCK_BRANDS: Brand[] = [
@@ -40,7 +41,7 @@ export const MOCK_BRANDS: Brand[] = [
       { id: 'k2', name: '特殊碟', color: '#EF4444', price: 24 },
     ],
     sideDishes: [
-       { id: 's1', name: '味噌汤', price: 18, icon: 'soup_kitchen' },
+      { id: 's1', name: '味噌汤', price: 18, icon: 'soup_kitchen' },
     ]
   },
   {
@@ -55,7 +56,7 @@ export const MOCK_BRANDS: Brand[] = [
     ],
     sideDishes: []
   },
-    {
+  {
     id: 'sushi_express',
     name: '争鲜',
     description: '高性价比的美味',
@@ -102,9 +103,9 @@ export const MOCK_HISTORY: MealRecord[] = [
     serviceChargeAmount: 19.90,
     serviceChargeRule: { type: 'percent', value: 10 },
     items: [
-        { name: '红碟', price: 12, quantity: 5, type: 'plate', color: '#EF4444' },
-        { name: '银碟', price: 17, quantity: 3, type: 'plate', color: '#D1D5DB' },
-        { name: '金碟', price: 22, quantity: 4, type: 'plate', color: '#EAB308' },
+      { name: '红碟', price: 12, quantity: 5, type: 'plate', color: '#EF4444' },
+      { name: '银碟', price: 17, quantity: 3, type: 'plate', color: '#D1D5DB' },
+      { name: '金碟', price: 22, quantity: 4, type: 'plate', color: '#EAB308' },
     ]
   },
   {
@@ -122,7 +123,7 @@ export const MOCK_HISTORY: MealRecord[] = [
     serviceChargeAmount: 0,
     serviceChargeRule: { type: 'none', value: 0 },
     items: [
-        { name: '普通碟', price: 12, quantity: 9, type: 'plate', color: '#3B82F6' },
+      { name: '普通碟', price: 12, quantity: 9, type: 'plate', color: '#3B82F6' },
     ]
   }
 ];

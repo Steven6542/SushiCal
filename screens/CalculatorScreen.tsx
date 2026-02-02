@@ -36,16 +36,23 @@ const CalculatorScreen: React.FC = () => {
 
     const totalPlates = Object.values(plateCounts).reduce((a: number, b: number) => a + b, 0);
 
+    const getPrice = (basePrice: number, regionalPrices?: Record<string, number>) => {
+        if (!regionalPrices || !region) return basePrice;
+        return regionalPrices[region] ?? basePrice;
+    };
+
     const subtotal = useMemo(() => {
         let sum = 0;
         brand.plates.forEach(p => {
-            sum += (plateCounts[p.id] || 0) * p.price;
+            const price = getPrice(p.price, p.regional_prices);
+            sum += (plateCounts[p.id] || 0) * price;
         });
         brand.sideDishes.forEach(s => {
-            sum += (sideCounts[s.id] || 0) * s.price;
+            const price = getPrice(s.price, s.regional_prices);
+            sum += (sideCounts[s.id] || 0) * price;
         });
         return sum;
-    }, [brand, plateCounts, sideCounts]);
+    }, [brand, plateCounts, sideCounts, region]);
 
     const serviceChargeAmount = useMemo(() => {
         if (serviceCharge.type === 'percent') {
@@ -83,9 +90,10 @@ const CalculatorScreen: React.FC = () => {
         const items: MealItem[] = [];
         brand.plates.forEach(p => {
             if (plateCounts[p.id] > 0) {
+                const price = getPrice(p.price, p.regional_prices);
                 items.push({
                     name: p.name,
-                    price: p.price,
+                    price: price,
                     quantity: plateCounts[p.id],
                     type: 'plate',
                     color: p.color
@@ -94,9 +102,10 @@ const CalculatorScreen: React.FC = () => {
         });
         brand.sideDishes.forEach(s => {
             if (sideCounts[s.id] > 0) {
+                const price = getPrice(s.price, s.regional_prices);
                 items.push({
                     name: s.name,
-                    price: s.price,
+                    price: price,
                     quantity: sideCounts[s.id],
                     type: 'side',
                     icon: s.icon
@@ -126,7 +135,7 @@ const CalculatorScreen: React.FC = () => {
 
             {/* Header */}
             <header className="sticky top-0 z-40 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md px-4 py-3 flex items-center justify-between border-b border-gray-100 dark:border-gray-800">
-                <div onClick={() => navigate('/')} className="flex flex-col cursor-pointer">
+                <div onClick={() => navigate(`/?region=${region}`)} className="flex flex-col cursor-pointer">
                     <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-xs font-semibold tracking-wide uppercase">
                         <span className="material-symbols-outlined text-[16px]">arrow_back_ios</span>
                         <span>{t('calc.back')}</span>
@@ -266,7 +275,7 @@ const CalculatorScreen: React.FC = () => {
                                 <div className="mb-3 h-16 w-16 rounded-full border-4 border-white dark:border-surface-dark ring-2 ring-gray-100 dark:ring-gray-700 shadow-lg" style={{ backgroundColor: plate.color }}></div>
                                 <div className="text-center mb-4">
                                     <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">{plate.name}</p>
-                                    <p className="text-xl font-bold text-gray-900 dark:text-white">{currencySymbol}{plate.price}</p>
+                                    <p className="text-xl font-bold text-gray-900 dark:text-white">{currencySymbol}{getPrice(plate.price, plate.regional_prices)}</p>
                                 </div>
                                 <div className="flex w-full items-center justify-between bg-gray-50 dark:bg-black/20 rounded-full p-1">
                                     <button onClick={() => updatePlate(plate.id, -1)} className="flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-700 text-gray-500 shadow-sm hover:text-gray-600 active:scale-90 transition-all">
@@ -298,7 +307,7 @@ const CalculatorScreen: React.FC = () => {
                                         </div>
                                         <div className="flex flex-col">
                                             <span className="font-bold text-gray-900 dark:text-white text-sm">{side.name}</span>
-                                            <span className="text-primary font-bold text-sm">{currencySymbol}{side.price}</span>
+                                            <span className="text-primary font-bold text-sm">{currencySymbol}{getPrice(side.price, side.regional_prices)}</span>
                                         </div>
                                     </div>
                                     <div className="flex items-center bg-gray-50 dark:bg-black/20 rounded-full p-1 h-9 gap-1">

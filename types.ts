@@ -5,6 +5,7 @@ export interface PlateType {
   name: string;
   color: string; // hex code
   price: number;
+  regional_prices?: Record<string, number>;
 }
 
 export interface SideDish {
@@ -12,6 +13,7 @@ export interface SideDish {
   name: string;
   price: number;
   icon: string; // material symbol name
+  regional_prices?: Record<string, number>;
 }
 
 export interface ServiceChargeConfig {

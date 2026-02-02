@@ -223,12 +223,14 @@ const mapDbPlate = (p: any): PlateType => ({
     id: p.id,
     name: p.name,
     color: p.color,
-    price: Number(p.price)
+    price: Number(p.price),
+    regional_prices: p.regional_prices
 });
 
 const mapDbSide = (s: any): SideDish => ({
     id: s.id,
     name: s.name,
     price: Number(s.price),
-    icon: s.icon
+    icon: s.icon,
+    regional_prices: s.regional_prices
 });

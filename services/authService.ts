@@ -102,7 +102,7 @@ export const getUserProfile = async (userId: string): Promise<UserProfile | null
         .from('user_profiles')
         .select('*')
         .eq('id', userId)
-        .single();
+        .maybeSingle();
 
     if (error) {
         console.error('Error fetching profile:', error);
@@ -121,7 +121,7 @@ export const updateUserProfile = async (userId: string, updates: Partial<UserPro
         .update(updates)
         .eq('id', userId)
         .select()
-        .single();
+        .maybeSingle();
 
     if (error) {
         throw error;

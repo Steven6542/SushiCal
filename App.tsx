@@ -203,7 +203,7 @@ const App: React.FC = () => {
   };
 
   const t = (key: string) => {
-    const langData = translations[language];
+    const langData = translations[language] || translations['简体中文'];
     return langData[key] || key;
   };
 
