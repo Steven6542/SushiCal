@@ -1,0 +1,5 @@
+{
+  "name": "SushiCalc",
+  "description": "A smart sushi billing calculator and history tracker for sushi lovers.",
+  "requestFramePermissions": []
+}
