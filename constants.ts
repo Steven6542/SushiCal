@@ -3,7 +3,7 @@ import { Brand, MealRecord, Region } from './types';
 export const GET_CURRENCY = (region: string) => {
   switch (region) {
     case 'mainland': return '¥';
-    case 'macau': return 'MOP$';
+    case 'taiwan': return 'NT$';
     case 'hk':
     default: return 'HK$';
   }

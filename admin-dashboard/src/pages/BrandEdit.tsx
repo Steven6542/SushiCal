@@ -329,15 +329,15 @@ export function BrandEdit() {
                                         />
                                     </div>
                                     <div>
-                                        <span className="text-xs text-gray-500">Macau (MOP)</span>
+                                        <span className="text-xs text-gray-500">Taiwan (NT$)</span>
                                         <input
                                             className="w-full border p-1 rounded text-sm"
                                             type="number"
                                             placeholder="MOP"
-                                            value={editingPlate.regional_prices?.macau ?? ''}
+                                            value={editingPlate.regional_prices?.taiwan ?? ''}
                                             onChange={e => setEditingPlate({
                                                 ...editingPlate,
-                                                regional_prices: { ...editingPlate.regional_prices, macau: Number(e.target.value) }
+                                                regional_prices: { ...editingPlate.regional_prices, taiwan: Number(e.target.value) }
                                             })}
                                         />
                                     </div>
@@ -408,14 +408,14 @@ export function BrandEdit() {
                                         />
                                     </div>
                                     <div>
-                                        <span className="text-xs text-gray-500">Macau</span>
+                                        <span className="text-xs text-gray-500">Taiwan</span>
                                         <input
                                             className="w-full border p-1 rounded text-sm"
                                             type="number"
-                                            value={editingSide.regional_prices?.macau ?? ''}
+                                            value={editingSide.regional_prices?.taiwan ?? ''}
                                             onChange={e => setEditingSide({
                                                 ...editingSide,
-                                                regional_prices: { ...editingSide.regional_prices, macau: Number(e.target.value) }
+                                                regional_prices: { ...editingSide.regional_prices, taiwan: Number(e.target.value) }
                                             })}
                                         />
                                     </div>

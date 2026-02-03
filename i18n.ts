@@ -5,13 +5,13 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.home': '首页',
     'nav.history': '记录',
     'nav.profile': '我的',
-    
+
     'home.greeting': '您在哪里用餐？',
     'home.title': '选择餐厅',
     'home.search': '搜索寿司品牌...',
     'home.mainland': '中国内地',
     'home.hk': '香港',
-    'home.macau': '澳门',
+    'home.taiwan': '台湾',
     'home.popular': '热门品牌',
     'home.create': '创建自定义品牌',
     'home.tag.hot': '热门',
@@ -113,7 +113,7 @@ export const translations: Record<Language, Record<string, string>> = {
     'login.no_account': '没有账号？',
     'login.register_link': '点此注册',
     'login.guest': '游客模式试用',
-    
+
     'register.title': '注册新账号',
     'register.btn': '立即注册',
     'register.account_hint': '请输入手机号',
@@ -128,13 +128,13 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.home': '首頁',
     'nav.history': '記錄',
     'nav.profile': '我的',
-    
+
     'home.greeting': '您在哪裡用餐？',
     'home.title': '選擇餐廳',
     'home.search': '搜尋壽司品牌...',
     'home.mainland': '中國內地',
     'home.hk': '香港',
-    'home.macau': '澳門',
+    'home.taiwan': '台灣',
     'home.popular': '熱門品牌',
     'home.create': '創建自定義品牌',
     'home.tag.hot': '熱門',
@@ -216,7 +216,7 @@ export const translations: Record<Language, Record<string, string>> = {
     'brand.add_side': '添加單點菜品',
     'brand.name': '名稱',
     'brand.dish_name': '菜品名稱',
-    
+
     'login.title': '歡迎回來',
     'login.subtitle': '使用賬號密碼登錄，記錄您的美味瞬間',
     'login.account': '賬號',
