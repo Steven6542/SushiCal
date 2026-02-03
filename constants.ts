@@ -1,13 +1,8 @@
 import { Brand, MealRecord, Region } from './types';
+import { getCurrencySymbol } from './utils/regionUtils';
 
-export const GET_CURRENCY = (region: string) => {
-  switch (region) {
-    case 'mainland': return '¥';
-    case 'taiwan': return 'NT$';
-    case 'hk':
-    default: return 'HK$';
-  }
-};
+// Export for backward compatibility
+export const GET_CURRENCY = getCurrencySymbol;
 
 export const MOCK_BRANDS: Brand[] = [
   {

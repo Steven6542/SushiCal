@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../App';
 import { MealRecord, Region } from '../types';
+import { getRegionName } from '../utils/regionUtils';
 
 const HistoryScreen: React.FC = () => {
     const navigate = useNavigate();
@@ -94,10 +95,10 @@ const HistoryScreen: React.FC = () => {
                                             <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{formatDate(record.date)}</p>
                                             <div className="flex items-center gap-2">
                                                 <span className={`inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-[11px] font-bold ${record.region === 'hk' ? 'bg-primary/20 dark:bg-primary/10 text-emerald-800 dark:text-primary' :
-                                                        record.region === 'mainland' ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300' :
-                                                            'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300'
+                                                    record.region === 'mainland' ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300' :
+                                                        'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300'
                                                     }`}>
-                                                    {record.region === 'hk' ? t('home.hk') : record.region === 'mainland' ? t('home.mainland') : t('home.taiwan')}
+                                                    {getRegionName(record.region, t)}
                                                 </span>
                                             </div>
                                         </div>
@@ -133,8 +134,8 @@ const FilterTab: React.FC<{ label: string; active: boolean; onClick: () => void 
     <button
         onClick={onClick}
         className={`shrink-0 px-5 py-2.5 rounded-full text-sm font-bold shadow-sm whitespace-nowrap transition-colors ${active
-                ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
-                : 'bg-surface-light dark:bg-surface-dark text-slate-600 dark:text-slate-300 border border-transparent dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
+            ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
+            : 'bg-surface-light dark:bg-surface-dark text-slate-600 dark:text-slate-300 border border-transparent dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
             }`}
     >
         {label}

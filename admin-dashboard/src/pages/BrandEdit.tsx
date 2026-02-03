@@ -4,6 +4,12 @@ import { supabase } from '../lib/supabase';
 import type { Brand, Plate, SideDish } from '../types';
 import { ImageUpload } from '../components/ImageUpload';
 
+const REGION_NAMES: Record<string, string> = {
+    mainland: '中国内地',
+    hk: '香港',
+    taiwan: '台湾'
+};
+
 export function BrandEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -170,6 +176,14 @@ export function BrandEdit() {
         <div className="space-y-8">
             {/* Brand Header & Meta */}
             <div className="bg-white p-6 rounded-lg shadow">
+                <div className="flex items-center justify-between mb-4">
+                    <h1 className="text-2xl font-bold text-gray-900">{brand.name}</h1>
+                    {brand.region && (
+                        <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                            {REGION_NAMES[brand.region] || brand.region}
+                        </span>
+                    )}
+                </div>
                 <div className="flex flex-col md:flex-row gap-8">
                     <div className="flex-shrink-0">
                         <ImageUpload

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useApp } from '../App';
 import { Brand } from '../types';
+import { ALL_REGIONS, getRegionName } from '../utils/regionUtils';
 
 const HomeScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const HomeScreen: React.FC = () => {
         {/* Region Toggle */}
         <div className="py-4">
           <div className="flex p-1.5 bg-white dark:bg-surface-dark rounded-full shadow-sm">
-            {['mainland', 'hk', 'taiwan'].map((r) => (
+            {ALL_REGIONS.map((r) => (
               <label key={r} className="flex-1 relative cursor-pointer">
                 <input
                   type="radio"
@@ -61,7 +62,7 @@ const HomeScreen: React.FC = () => {
                   className="peer sr-only"
                 />
                 <div className="w-full py-3 text-center text-sm font-bold rounded-full text-slate-500 peer-checked:bg-primary peer-checked:text-slate-900 peer-checked:shadow-md transition-all duration-200 capitalize">
-                  {r === 'mainland' ? t('home.mainland') : r === 'hk' ? t('home.hk') : t('home.taiwan')}
+                  {getRegionName(r, t)}
                 </div>
               </label>
             ))}

@@ -2,7 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useApp } from '../App';
 import { ServiceChargeConfig, Region, MealItem } from '../types';
-import { GET_CURRENCY } from '../constants';
+import { getCurrencySymbol } from '../utils/regionUtils';
+import { getPriceByRegion, calculateServiceCharge } from '../utils/priceUtils';
 
 const CalculatorScreen: React.FC = () => {
     const { brandId } = useParams();
@@ -11,7 +12,7 @@ const CalculatorScreen: React.FC = () => {
     const { brands, addMeal, user, t } = useApp();
     const brand = brands.find(b => b.id === brandId);
     const region = (searchParams.get('region') as Region) || 'mainland';
-    const currencySymbol = GET_CURRENCY(region);
+    const currencySymbol = getCurrencySymbol(region);
 
     const [plateCounts, setPlateCounts] = useState<Record<string, number>>({});
     const [sideCounts, setSideCounts] = useState<Record<string, number>>({});
@@ -37,8 +38,7 @@ const CalculatorScreen: React.FC = () => {
     const totalPlates = Object.values(plateCounts).reduce((a: number, b: number) => a + b, 0);
 
     const getPrice = (basePrice: number, regionalPrices?: Record<string, number>) => {
-        if (!regionalPrices || !region) return basePrice;
-        return regionalPrices[region] ?? basePrice;
+        return getPriceByRegion(basePrice, regionalPrices, region);
     };
 
     const subtotal = useMemo(() => {
@@ -55,13 +55,12 @@ const CalculatorScreen: React.FC = () => {
     }, [brand, plateCounts, sideCounts, region]);
 
     const serviceChargeAmount = useMemo(() => {
-        if (serviceCharge.type === 'percent') {
-            return subtotal * (serviceCharge.value / 100);
-        }
-        if (serviceCharge.type === 'head') {
-            return serviceCharge.value * headCount;
-        }
-        return 0;
+        return calculateServiceCharge(
+            subtotal,
+            serviceCharge.type,
+            serviceCharge.value,
+            headCount
+        );
     }, [subtotal, serviceCharge, headCount]);
 
     const total = subtotal + serviceChargeAmount;

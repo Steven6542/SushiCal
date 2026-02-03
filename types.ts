@@ -1,4 +1,4 @@
-export type Region = 'mainland' | 'hk' | 'macau';
+export type Region = 'mainland' | 'hk' | 'taiwan';
 
 export interface PlateType {
   id: string;

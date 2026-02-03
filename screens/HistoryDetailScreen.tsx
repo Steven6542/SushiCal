@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useApp } from '../App';
+import { getRegionName } from '../utils/regionUtils';
 
 // Define html2canvas type roughly for global access
 declare global {
@@ -129,7 +130,7 @@ const HistoryDetailScreen: React.FC = () => {
                             </div>
                             <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-sm font-medium">
                                 <span className="material-symbols-outlined text-[16px]">location_on</span>
-                                <span>{getLocationName(record.region)}</span>
+                                <span>{getRegionName(record.region as any, t)}</span>
                             </div>
                         </div>
                     </div>

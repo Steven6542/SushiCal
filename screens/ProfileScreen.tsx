@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useApp } from '../App';
 import { useNavigate } from 'react-router-dom';
+import { SUPPORTED_CURRENCIES, EXCHANGE_RATES, CurrencySymbol } from '../utils/currencyUtils';
 
 const ProfileScreen: React.FC = () => {
     const { history, language, setLanguage, t, logout } = useApp();
@@ -251,8 +252,8 @@ const SelectionModal: React.FC<SelectionModalProps> = ({ isOpen, onClose, title,
                             key={opt.value}
                             onClick={() => { onSelect(opt.value); onClose(); }}
                             className={`flex items-center justify-between p-4 rounded-xl transition-all ${selected === opt.value
-                                    ? 'bg-primary/10 text-primary font-bold shadow-sm border border-primary/20'
-                                    : 'bg-gray-50 dark:bg-black/20 text-slate-700 dark:text-slate-300 font-medium hover:bg-gray-100 dark:hover:bg-black/40 border border-transparent'
+                                ? 'bg-primary/10 text-primary font-bold shadow-sm border border-primary/20'
+                                : 'bg-gray-50 dark:bg-black/20 text-slate-700 dark:text-slate-300 font-medium hover:bg-gray-100 dark:hover:bg-black/40 border border-transparent'
                                 }`}
                         >
                             <span>{opt.label}</span>
